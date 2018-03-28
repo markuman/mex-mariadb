@@ -51,6 +51,11 @@ idx |b |
 
 first draft. selecting may work. inserting, updating ect. works, but throws an error?
 
+## TODO
+
+* classdef wrapper for comfortable usage
+* better error handling?
+
 
 
 
