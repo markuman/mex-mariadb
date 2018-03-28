@@ -1,6 +1,6 @@
-#include <my_global.h>
 #include <mysql.h>
 #include <mex.h>
+#include <math.h>
 
 char *hostname, *command, *password, *database, *username;
 int port;
