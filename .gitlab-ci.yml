@@ -1,0 +1,34 @@
+image: registry.gitlab.com/markuman/dev/octave:4.2.0
+
+variables:
+  DOCKER_DRIVER: overlay
+
+stages:
+  - test
+
+before_script:
+- apk --update --no-cache add mariadb-client mariadb-dev
+
+test mariadb:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mariadb:10.2.13
+      alias: mariadb
+  script:
+    - make
+    - octave -q gitlab-ci.m
+
+test mysql:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mysql:5.7.21
+      alias: mariadb
+  script:
+    - make
+    - octave -q gitlab-ci.m
