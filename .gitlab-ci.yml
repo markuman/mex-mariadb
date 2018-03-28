@@ -19,6 +19,7 @@ test mariadb:
       alias: mariadb
   script:
     - make
+    - mysql -h mariadb -ppassword -e 'create database octave;'
     - octave -q gitlab-ci.m
 
 test mysql:
@@ -31,4 +32,5 @@ test mysql:
       alias: mariadb
   script:
     - make
+    - mysql -h mariadb -ppassword -e 'create database octave;'
     - octave -q gitlab-ci.m
