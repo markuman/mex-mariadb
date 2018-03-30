@@ -23,7 +23,7 @@ mkoctfile --mex  -L/usr/lib  -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 # example
 
 ```
-octave:1> a = mariadb('127.0.0.1', 3306, 'root', 'password', 'testdb', 'select * from a')
+octave:1> a = mariadb_('127.0.0.1', 3306, 'root', 'password', 'testdb', 'select * from a')
 a =
 {
   [1,1] = idx
@@ -56,13 +56,33 @@ idx |b |
 8   |3 |
 ```
 
+# classdef
+
+```
+octave:2> m = mariadb();
+octave:3> m.query('select version()')
+ans =
+{
+  [1,1] = version()
+  [2,1] = 10.2.13-MariaDB-10.2.13+maria~jessie
+}
+octave:4> m = mariadb('hostname', 'mariadb', 'password', 'password');
+octave:5> m.query('select version()')
+ans =
+{
+  [1,1] = version()
+  [2,1] = 10.2.13-MariaDB-10.2.13+maria~jessie
+}
+octave:6>
+```
+
 # status
 
 first draft. selecting may work. inserting, updating ect. works, but throws an error?
 
 ## TODO
 
-* classdef wrapper for comfortable usage
+* more classdef wrapper methods for comfortable usage
 * better error handling?
 
 
