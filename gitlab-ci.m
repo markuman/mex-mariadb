@@ -19,5 +19,8 @@ assert(2 == length(retval))
 assert(1 == strcmp(retval{1}, 'version'))
 assert(1 == strfind (retval{2}, '10.2.13-MariaDB') || strfind (retval{2}, '5.7.21'))
 
+sql.output = 'mat';
+retval = sql.query('select version() as version');
+assert(1 == ismatrix(retval))
 
 atexit ("last_words");
