@@ -9,6 +9,7 @@ stages:
 
 before_script:
 - apk --update --no-cache add mariadb-client mariadb-dev
+- wget https://raw.githubusercontent.com/markuman/mUnittest/master/mUnittest.m
 
 test mariadb:
   stage: test
@@ -21,7 +22,7 @@ test mariadb:
   script:
     - make
     - mysql -h mariadb -ppassword -e 'create database octave;'
-    - octave -q gitlab-ci.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
 test mysql:
   stage: test
@@ -34,4 +35,4 @@ test mysql:
   script:
     - make
     - mysql -h mariadb -ppassword -e 'create database octave;'
-    - octave -q gitlab-ci.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
