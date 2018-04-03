@@ -19,7 +19,7 @@ classdef mariadb
             % use it
             p.addParamValue ('port',            3306,           @isnumeric);
             p.addParamValue ('hostname' ,       'localhost',    @ischar);
-            p.addParamValue ('database',        'octave',       @isnumeric);
+            p.addParamValue ('database',        'octave',       @ischar);
             p.addParamValue ('password',        'password',     @ischar);
             p.addParamValue ('username',        'root',         @ischar);
             p.parse (varargin{:});
