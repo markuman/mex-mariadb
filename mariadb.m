@@ -7,6 +7,7 @@ classdef mariadb
         database
         command
         is_octave
+        output
     end
     methods
         function self = mariadb(varargin)
@@ -31,6 +32,7 @@ classdef mariadb
             self.password        = p.Results.password;
             self.username        = p.Results.username;
             self.is_octave       = true;
+            self.output          = 'cell';
             
             if (exist('OCTAVE_VERSION', 'builtin') ~= 5) 
                 self.is_octave = false;
