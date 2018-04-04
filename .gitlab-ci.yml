@@ -3,6 +3,7 @@ image: registry.gitlab.com/markuman/dev/octave:4.2.0
 variables:
   DOCKER_DRIVER: overlay
   MYSQL_ROOT_PASSWORD: password
+  MYSQL_HOST: mariadb
 
 stages:
   - test
@@ -21,7 +22,7 @@ test mariadb:
       alias: mariadb
   script:
     - make
-    - mysql -h mariadb -ppassword -e 'create database octave;'
+    - md5sum mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
 test mysql:
@@ -34,5 +35,4 @@ test mysql:
       alias: mariadb
   script:
     - make
-    - mysql -h mariadb -ppassword -e 'create database octave;'
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
