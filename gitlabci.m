@@ -1,9 +1,14 @@
 %% test raw mariadb mex file
 
+HOSTNAME = getenv('MYSQL_HOST');
+if length(HOSTNAME) == 0
+  HOSTNAME = '127.0.0.1'
+end
+
 testMex = @(x) strcat('MEX FILE: ', x);
 testClassdef = @(x) strcat('CLASSDEF: ', x);
 
-retval = mariadb_('mariadb', 3306, 'root', 'password', 'select version() as version');
+retval = mariadb_(HOSTNAME, 3306, 'root', 'password', 'select version() as version');
 
 assert(2 == length(retval), 
   testMex('data length must be 2'))
@@ -15,7 +20,7 @@ assert(1 == strfind (retval{2}, '10.2.13-MariaDB') || strfind (retval{2}, '5.7.2
   testMex('check for mariadb/mysql version'))
 
 %% classdef tests
-sql = mariadb('hostname', 'mariadb', 'password', 'password');
+sql = mariadb('hostname', HOSTNAME, 'password', 'password');
 
 retval = sql.query('select version() as version');
 
@@ -44,7 +49,7 @@ assert(0 == numel(sql.query('create table a (idx int)')),
   testClassdef('create table a'))
 
 % test connection with given database
-sql = mariadb('hostname', 'mariadb', 'password', 'password', 'database', 'octave');
+sql = mariadb('hostname', HOSTNAME, 'password', 'password', 'database', 'octave');
 sql.output = 'mat';
 assert(0 == numel(sql.query('insert into a (idx) values (1),(2),(3),(4)')),
   testClassdef('insert data into table a'))
