@@ -22,6 +22,57 @@ mkoctfile --mex  -L/usr/lib  -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 # example
 
+you can take a look at `gitlabci.m` file too. the classdef file `mariadb.m` and the mex file `mariadb_.mex` are both used for testing.
+
+## class def example
+```
+octave:1> sql = mariadb('hostname', '127.0.0.1', 'password', 'password');
+octave:2> sql.query('create database octave')
+ans = [](0x0)
+```
+
+to change a database, you can recreate your class  
+or change the property `sql.database = 'octave'`.
+
+```
+octave:3> sql = mariadb('hostname', '127.0.0.1', 'password', 'password', 'database', 'octave');
+octave:4> sql.query('create table a (idx int)');
+octave:5> sql.query('insert into a (idx) values (1),(2),(3),(4)');
+octave:6> sql.query('select * from a')
+ans =
+{
+  [1,1] = idx
+  [2,1] = 1
+  [3,1] = 2
+  [4,1] = 3
+  [5,1] = 4
+}
+```
+
+you can change the output format to matrix
+
+```
+octave:7> sql.output = 'mat'
+sql =
+
+<object mariadb>
+
+octave:8> sql.query('select * from a')
+ans =
+
+   NaN
+     1
+     2
+     3
+     4
+
+octave:9>
+```
+
+## return structure
+
+the return structure is always a cell.
+
 ```
 octave:1> a = mariadb_('127.0.0.1', 3306, 'root', 'password', 'testdb', 'select * from a')
 a =
@@ -56,37 +107,32 @@ idx |b |
 8   |3 |
 ```
 
-# classdef
+# mariadb()
 
-```
-octave:2> m = mariadb();
-octave:3> m.query('select version()')
-ans =
-{
-  [1,1] = version()
-  [2,1] = 10.2.13-MariaDB-10.2.13+maria~jessie
-}
-octave:4> m = mariadb('hostname', 'mariadb', 'password', 'password');
-octave:5> m.query('select version()')
-ans =
-{
-  [1,1] = version()
-  [2,1] = 10.2.13-MariaDB-10.2.13+maria~jessie
-}
-octave:6>
-```
+## properties
 
-# status
+* `hostname`
+  * char, default `localhost`
+* `port`
+  * number, default `3306`
+* `username`
+  * char, default `root`
+* `password`
+  * char, default `password`
+* `database`
+  * char, default empty string. Connects to no database
+* `command`
+  * char, sql command
+* `is_octave`
+  * boolean, determines if class was init on matlab or octave
+* `output`
+  * char, defines the output format. currently supports only `mat` and `cell`
 
-first draft. selecting may work. inserting, updating ect. works, but throws an error?
+## methods
 
-## TODO
-
-* more classdef wrapper methods for comfortable usage
-* better error handling?
-
-
-
-
+* `query(command)`
+  * executes sql command
+* `to_mat()`
+  * only used internally to convert the cell output to matrix format.
 
 
