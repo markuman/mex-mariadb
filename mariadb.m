@@ -20,7 +20,7 @@ classdef mariadb
             % use it
             p.addParamValue ('port',            3306,           @isnumeric);
             p.addParamValue ('hostname' ,       'localhost',    @ischar);
-            p.addParamValue ('database',        'octave',       @ischar);
+            p.addParamValue ('database',        '',             @ischar);
             p.addParamValue ('password',        'password',     @ischar);
             p.addParamValue ('username',        'root',         @ischar);
             p.parse (varargin{:});
@@ -41,7 +41,7 @@ classdef mariadb
         end
 
         function retval = query(self, command)
-            retval = mariadb_(self.hostname, self.port, self.username, self.password, self.database, command);
+            retval = mariadb_(self.hostname, self.port, self.username, self.password, command, self.database);
             
             switch self.output
                 case 'cell'

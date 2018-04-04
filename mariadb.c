@@ -13,8 +13,8 @@ typedef enum {
     PORT,
     USERNAME,
     PASSWORD,
-    DATABASE,
-    COMMAND
+    COMMAND,
+    DATABASE
 } connection_details;
 
 //#define DEBUG
@@ -31,9 +31,9 @@ void oh_boy(MYSQL *con){
 void mexFunction (int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[]){
     // --- input checks
-    // currently we need at least more than two inputs and one ouput!!
-    // improve me!!
-    if (nrhs != 6 && nlhs != 1) {
+    // at least 5 arguments, max 6 arguments
+    // DATABASE is the last and optional argument
+    if (nrhs >= 5 && nrhs <= 6 && nlhs != 1) {
         mexErrMsgIdAndTxt( "MATLAB:mariadb:invalidNumInputs",
                         "Six inputs are required.");
     }
@@ -83,7 +83,7 @@ void mexFunction (int nlhs, mxArray *plhs[],
         mexErrMsgIdAndTxt("MATLAB:mariadb:nrhs", "Error setting up mariadb connection: Password must be a string.");
     }
 
-    // get username
+    // get command
     if ( mxIsChar(prhs[COMMAND]) ) {
         command = (char *) mxCalloc(mxGetN(prhs[COMMAND])+1, sizeof(char));
         mxGetString(prhs[COMMAND], command, mxGetN(prhs[COMMAND])+1);
@@ -95,14 +95,18 @@ void mexFunction (int nlhs, mxArray *plhs[],
     }
 
     // get databasename
-    if ( mxIsChar(prhs[DATABASE]) ) {
-        database = (char *) mxCalloc(mxGetN(prhs[DATABASE])+1, sizeof(char));
-        mxGetString(prhs[DATABASE], database, mxGetN(prhs[DATABASE])+1);
-        #ifdef DEBUG
-        	mexPrintf("Database: %s\n", database);
-        #endif
+    if (nrhs == 6) {
+        if ( mxIsChar(prhs[DATABASE]) ) {
+            database = (char *) mxCalloc(mxGetN(prhs[DATABASE])+1, sizeof(char));
+            mxGetString(prhs[DATABASE], database, mxGetN(prhs[DATABASE])+1);
+            #ifdef DEBUG
+                mexPrintf("Database: %s\n", database);
+            #endif
+        } else {
+            mexErrMsgIdAndTxt("MATLAB:mariadb:nrhs", "Error setting up mariadb connection: Database must be a string.");
+        }
     } else {
-        mexErrMsgIdAndTxt("MATLAB:mariadb:nrhs", "Error setting up mariadb connection: Database must be a string.");
+        database = NULL;
     }
 
     MYSQL *con = mysql_init(NULL);
