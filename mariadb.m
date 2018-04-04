@@ -43,13 +43,15 @@ classdef mariadb
         function retval = query(self, command)
             retval = mariadb_(self.hostname, self.port, self.username, self.password, command, self.database);
             
-            switch self.output
-                case 'cell'
-                    return
-                case 'mat'
-                    retval = self.to_mat(retval);
-                otherwise
-                    return
+            if numel(retval) > 0
+                switch self.output
+                    case 'cell'
+                        return
+                    case 'mat'
+                        retval = self.to_mat(retval);
+                    otherwise
+                        return
+                end
             end
         end
         
