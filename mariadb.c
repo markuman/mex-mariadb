@@ -20,7 +20,9 @@ typedef enum {
 //#define DEBUG
 
 void oh_boy(MYSQL *con){
-    mexPrintf("oh boy >> %s\n", mysql_error(con));
+    if(mysql_errno(con)) {
+        mexErrMsgIdAndTxt("MATLAB:mariadb:nrhs", "%s\n", mysql_error(con));
+    }
     mysql_close(con);
     return;
 }
