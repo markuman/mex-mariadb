@@ -21,7 +21,7 @@ test mariadb:
     - name: mariadb:10.2.13
       alias: mariadb
   script:
-    - make
+    - make mysql
     - md5sum mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
@@ -34,5 +34,5 @@ test mysql:
     - name: mysql:5.7.21
       alias: mariadb
   script:
-    - make
+    - make mysql
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
