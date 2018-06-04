@@ -1,0 +1,38 @@
+image: registry.gitlab.com/markuman/dev/octave:4.2.0
+
+variables:
+  DOCKER_DRIVER: overlay
+  MYSQL_ROOT_PASSWORD: password
+  MYSQL_HOST: mariadb
+
+stages:
+  - test
+
+before_script:
+- apk --update --no-cache add mariadb-client mariadb-dev
+- wget https://raw.githubusercontent.com/markuman/mUnittest/master/mUnittest.m
+
+test mariadb:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mariadb:10.2.13
+      alias: mariadb
+  script:
+    - make mysql
+    - md5sum mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+test mysql:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mysql:5.7.21
+      alias: mariadb
+  script:
+    - make mysql
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
