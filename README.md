@@ -3,7 +3,7 @@
 [![pipeline status](https://gitlab.com/markuman/mex-mariadb/badges/master/pipeline.svg)](https://gitlab.com/markuman/mex-mariadb/commits/master)
 
 * https://gitlab.com/markuman/mex-mariadb
-* https://github.com/markuman/mex-mariadb
+* https://git.osuv.de/m/mex-mariadb
 
 Test condition
   * Linux + Octave + MariaDB 
