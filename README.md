@@ -1,9 +1,10 @@
 # mex mariadb client
 
-[![pipeline status](https://gitlab.com/markuman/mex-mariadb/badges/master/pipeline.svg)](https://gitlab.com/markuman/mex-mariadb/commits/master)
+[![pipeline status](http://status.osuv.de/mex-mariadb.svg)](https://git.osuv.de/m/mex-mariadb/commits/master)
 
-* https://gitlab.com/markuman/mex-mariadb
 * https://git.osuv.de/m/mex-mariadb
+* Mirror: https://gitlab.com/markuman/mex-mariadb
+
 
 Test condition
   * Linux + Octave + MariaDB 
