@@ -8,6 +8,8 @@ pipeline:
       - apk --update --no-cache add mariadb-client mariadb-dev
       - wget https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
       - make mysql
+      - sleep 15
+      - mysql -h database -u root -ppassword -e 'select version();'
       - md5sum mUnittest.m
       - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
       
