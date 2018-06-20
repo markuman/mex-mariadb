@@ -1,0 +1,19 @@
+pipeline:
+  test:
+    image: registry.gitlab.com/markuman/dev/octave:4.2.0
+    environment:
+      - MYSQL_HOST=database
+      - MYSQL_ROOT_PASSWORD=password
+    commands:
+      - apk --update --no-cache add mariadb-client mariadb-dev
+      - wget https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
+      - make mysql
+      - md5sum mUnittest.m
+      - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+      
+services:
+  database:
+    image: mariadb:10.2.13
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+
