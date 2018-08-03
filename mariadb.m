@@ -42,21 +42,30 @@ classdef mariadb
 
         function retval = query(self, command)
             retval = mariadb_(self.hostname, self.port, self.username, self.password, command, self.database);
-            
+            s = size(retval);
+           
             if numel(retval) > 0
                 switch self.output
                     case 'cell'
+                        if (s(1) == 1)
+                          retval = cell();
+                        end
                         return
                     case 'mat'
-                        retval = self.to_mat(retval);
+                        retval = self.to_mat(retval, s);
+                        return
                     otherwise
                         return
-                end
-            end
-        end
+                end % switch
+            end % if numel
+        end % query
         
-        function retval = to_mat(self, c)
-            retval = cellfun(@(x) str2double(x), c);
-        end
-    end
+        function retval = to_mat(self, c, s)
+            if (s(1) == 1)
+              retval = [];
+            else  
+              retval = cellfun(@(x) str2double(x), c);
+            end % if s
+        end % to_mat
+    end % methods
 end
