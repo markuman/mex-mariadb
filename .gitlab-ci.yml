@@ -9,7 +9,7 @@ stages:
   - build
   - test
 
-build mariadb 10.2.13:
+mariadb 10.2 alpine:
   stage: build
   tags:
     - docker
@@ -19,7 +19,7 @@ build mariadb 10.2.13:
     - make mysql
 
     
-build mariadb 5.5 centos:
+mariadb 5.5 centos:
   image: centos:7
   stage: build
   tags:
@@ -30,7 +30,7 @@ build mariadb 5.5 centos:
     - yum install -y mariadb-libs mariadb-devel make gcc octave-devel
     - make centos
 
-test against mariadb 10.2:
+mariadb 10.2:
   stage: test
   tags:
     - docker
@@ -45,7 +45,7 @@ test against mariadb 10.2:
     - md5sum mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
-test against mariadb 10.3:
+mariadb 10.3:
   stage: test
   tags:
     - docker
@@ -60,7 +60,7 @@ test against mariadb 10.3:
     - md5sum mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
-test against mariadb 10.1:
+mariadb 10.1:
   stage: test
   tags:
     - docker
@@ -75,7 +75,37 @@ test against mariadb 10.1:
     - md5sum mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
-test againt mysql 5.7:
+mariadb 10.0:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mariadb:10.0
+      alias: mariadb
+  script:
+    - apk --update --no-cache add mariadb-client mariadb-dev
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
+    - make mysql
+    - md5sum mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+mariadb 5.5:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mariadb:5.5
+      alias: mariadb
+  script:
+    - apk --update --no-cache add mariadb-client mariadb-dev
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
+    - make mysql
+    - md5sum mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+mysql 5.7:
   stage: test
   tags:
     - docker

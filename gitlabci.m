@@ -5,15 +5,15 @@ if length(HOSTNAME) == 0
   HOSTNAME = '127.0.0.1'
 end
 
-MARIADB_10_3 = "10.3.9-MariaDB"
-MARIADB_10_2 = "10.2.17-MariaDB"
-MARIADB_10_1 = "10.1.35-MariaDB"
-MARIADB_10_0 = "10.0.36-MariaDB"
-MARIADB_5_5 = "5.5.61-MariaDB"
-MYSQL_5_7 = "5.7.21"
+MARIADB_10_3 = "10.3.9-MariaDB";
+MARIADB_10_2 = "10.2.17-MariaDB";
+MARIADB_10_1 = "10.1.35-MariaDB";
+MARIADB_10_0 = "10.0.36-MariaDB";
+MARIADB_5_5 = "5.5.61-MariaDB";
+MYSQL_5_7 = "5.7.21";
 
 function retval = check_version (input_string)
-	retval = strfind (input_string, MARIADB_10_3) || strfind (input_string, MARIADB_10_2) || strfind (input_string, MARIADB_10_1) || strfind (input_string, MARIADB_10_0) || strfind (input_string, MARIADB_5_5) || strfind (input_string, MYSQL_5_7);
+	retval = strfind (input_string, "10.") || strfind (input_string, "5.");
 end
 
 testMex = @(x) strcat('MEX FILE: ', x);

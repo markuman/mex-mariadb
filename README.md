@@ -1,16 +1,19 @@
 # mex mariadb client
 
-[![pipeline status](http://status.osuv.de/mex-mariadb.svg)](https://git.osuv.de/m/mex-mariadb/commits/master)
+[![pipeline status](https://gitlab.com/markuman/mex-mariadb/badges/master/pipeline.svg)](https://gitlab.com/markuman/mex-mariadb/commits/master)
+
 
 * https://git.osuv.de/m/mex-mariadb
 * Mirror: https://gitlab.com/markuman/mex-mariadb
 
-
-Test condition
-  * Linux + Octave + MariaDB 
-  * Linux + Octave + MySQL
- 
-I guess it will work for Matlab too.
+* test compiling
+  * MariaDB 5.5 @ Centos 7 
+  * MariaDB 10.2 @ Alpine Linux 
+* run tests against
+  * MariaDB 10.1
+  * MariaDB 10.2
+  * MariaDB 10.3
+  * MySQL 5.7
 
 
 # Build
