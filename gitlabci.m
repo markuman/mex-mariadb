@@ -5,6 +5,17 @@ if length(HOSTNAME) == 0
   HOSTNAME = '127.0.0.1'
 end
 
+MARIADB_10_3 = "10.3.9-MariaDB"
+MARIADB_10_2 = "10.2.17-MariaDB"
+MARIADB_10_1 = "10.1.35-MariaDB"
+MARIADB_10_0 = "10.0.36-MariaDB"
+MARIADB_5_5 = "5.5.61-MariaDB"
+MYSQL_5_7 = "5.7.21"
+
+function retval = check_version (input_string)
+	retval = strfind (input_string, MARIADB_10_3) || strfind (input_string, MARIADB_10_2) || strfind (input_string, MARIADB_10_1) || strfind (input_string, MARIADB_10_0) || strfind (input_string, MARIADB_5_5) || strfind (input_string, MYSQL_5_7);
+end
+
 testMex = @(x) strcat('MEX FILE: ', x);
 testClassdef = @(x) strcat('CLASSDEF: ', x);
 
@@ -16,7 +27,7 @@ assert(2 == length(retval),
 assert(1 == strcmp(retval{1}, 'version'), 
   testMex('first cell value must be string "version"'))
   
-assert(1 == strfind (retval{2}, '10.2.13-MariaDB') || strfind (retval{2}, '5.7.21'), 
+assert(1 == check_version(retval{2}), 
   testMex('check for mariadb/mysql version'))
 
 %% classdef tests
@@ -30,7 +41,7 @@ assert(2 == length(retval),
 assert(1 == strcmp(retval{1}, 'version'),
   testClassdef('first cell value must be string "version"'))
 
-assert(1 == strfind (retval{2}, '10.2.13-MariaDB') || strfind (retval{2}, '5.7.21'),
+assert(1 == check_version(retval{2}),
   testClassdef('check for mariadb/mysql version'))
 
 % test change output format
@@ -40,7 +51,7 @@ retval = sql.query('select version() as version');
 assert(1 == ismatrix(retval),
   testClassdef('return value must be a Matrix'))
 
-assert(0 == numel(sql.query('create database octave')),
+assert(0 == numel(sql.query('create database if not exists octave')),
   testClassdef('create database octave'))
 
 % test change database

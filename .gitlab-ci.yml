@@ -40,7 +40,7 @@ test against mariadb 10.2:
       alias: mariadb
   script:
     - apk --update --no-cache add mariadb-client mariadb-dev
-    - wget https://raw.githubusercontent.com/markuman/mUnittest/master/mUnittest.m
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
     - make mysql
     - md5sum mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
@@ -55,7 +55,7 @@ test against mariadb 10.3:
       alias: mariadb
   script:
     - apk --update --no-cache add mariadb-client mariadb-dev
-    - wget https://raw.githubusercontent.com/markuman/mUnittest/master/mUnittest.m
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
     - make mysql
     - md5sum mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
@@ -70,7 +70,7 @@ test against mariadb 10.1:
       alias: mariadb
   script:
     - apk --update --no-cache add mariadb-client mariadb-dev
-    - wget https://raw.githubusercontent.com/markuman/mUnittest/master/mUnittest.m
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
     - make mysql
     - md5sum mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
@@ -85,7 +85,7 @@ test againt mysql 5.7:
       alias: mariadb
   script:
     - apk --update --no-cache add mariadb-client mariadb-dev
-    - wget https://raw.githubusercontent.com/markuman/mUnittest/master/mUnittest.m
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
     - make mysql
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
