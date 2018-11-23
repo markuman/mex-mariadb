@@ -1,0 +1,90 @@
+
+mariadb 10.2:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mariadb:10.2.15
+      alias: mariadb
+  script:
+    - apk --update --no-cache add mariadb-client mariadb-dev
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
+    - make mysql
+    - md5sum mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+mariadb 10.3:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mariadb:10.3.10
+      alias: mariadb
+  script:
+    - apk --update --no-cache add mariadb-client mariadb-dev
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
+    - make mysql
+    - md5sum mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+mariadb 10.1:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mariadb:10.1.35
+      alias: mariadb
+  script:
+    - apk --update --no-cache add mariadb-client mariadb-dev
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
+    - make mysql
+    - md5sum mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+mariadb 10.0:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mariadb:10.0.36
+      alias: mariadb
+  script:
+    - apk --update --no-cache add mariadb-client mariadb-dev
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
+    - make mysql
+    - md5sum mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+mariadb 5.5:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mariadb:5.5.61
+      alias: mariadb
+  script:
+    - apk --update --no-cache add mariadb-client mariadb-dev
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
+    - make mysql
+    - md5sum mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+mysql 5.7:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mysql:5.7.21
+      alias: mariadb
+  script:
+    - apk --update --no-cache add mariadb-client mariadb-dev
+    - wget http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m
+    - make mysql
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
