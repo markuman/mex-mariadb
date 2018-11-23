@@ -18,6 +18,7 @@ centos: ## build mex file on centos 7
 	gcc -std=gnu99 -fpic -shared -L/usr/lib64/mysql/ -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto -I/usr/include/mysql -I/usr/include/octave-3.8.2/octave/ mariadb.c -o mariadb_.mex
 
 test: ## run tests
+	curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
 	octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
 debug: ## debug
