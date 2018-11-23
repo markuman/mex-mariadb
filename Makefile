@@ -19,3 +19,10 @@ centos: ## build mex file on centos 7
 
 test: ## run tests
 	octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+debug: ## debug
+	docker stop db2 && echo "stopped db2" || echo "there was no db2 container"
+	docker run -d --rm -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password --name db2 mariadb
+	sleep 10
+	$(MAKE) mysql
+	octave-cli bug.m
