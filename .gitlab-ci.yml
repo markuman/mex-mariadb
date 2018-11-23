@@ -2,7 +2,7 @@ include:
   - '/gitlabci/build.yml'
   - '/gitlabci/test.yml'
 
-image: registry.gitlab.com/markuman/dev/octave:4.2.0
+image: alpine:edge
 
 variables:
   DOCKER_DRIVER: overlay
@@ -12,3 +12,9 @@ variables:
 stages:
   - build
   - test
+
+before_script:
+  - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl && echo "done" || yum install -y epel-release && yum install -y curl mariadb-libs mariadb-devel make gcc octave-devel
+  - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+  - apk --update --no-cache add octave && echo "done" || echo "this was hopefully not an alpine linux. otherwise the error message is gone"
+  - curl http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
