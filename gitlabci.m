@@ -5,7 +5,7 @@ if length(HOSTNAME) == 0
   HOSTNAME = '127.0.0.1'
 end
 
-MARIADB_10_3 = "10.3.9-MariaDB";
+MARIADB_10_3 = "10.3.10-MariaDB";
 MARIADB_10_2 = "10.2.17-MariaDB";
 MARIADB_10_1 = "10.1.35-MariaDB";
 MARIADB_10_0 = "10.0.36-MariaDB";
