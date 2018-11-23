@@ -30,6 +30,10 @@ void oh_boy(MYSQL *con){
 
 void mexFunction (int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[]){
+
+    #ifdef DEBUG
+        mexPrintf("MySQL Client Info: %s\n", mysql_get_client_info());
+    #endif
     // --- input checks
     // at least 5 arguments, max 6 arguments
     // DATABASE is the last and optional argument
@@ -109,6 +113,7 @@ void mexFunction (int nlhs, mxArray *plhs[],
         database = NULL;
     }
 
+    // prepare mysql connection
     MYSQL *con = mysql_init(NULL);
 
     if (con == NULL) {
@@ -116,31 +121,45 @@ void mexFunction (int nlhs, mxArray *plhs[],
         return;
     }
 
+    // make mysql connection
     if (mysql_real_connect(con, hostname, username, password, 
             database, port, NULL, 0) == NULL) {
         oh_boy(con);
         return;
     }  
 
+    // execute query
     if (mysql_query(con, command)) {
         oh_boy(con);
         return;
     }
 
+    // fetch result
     MYSQL_RES *result = mysql_store_result(con);
     if (result == NULL) {
+        #ifdef DEBUG
+            mexPrintf("result was null?");
+        #endif
+        // #2 https://git.osuv.de/m/mex-mariadb/issues/2
+        // we force to return an empty cell
+        plhs[0] = mxCreateCellMatrix(0, 0);
         oh_boy(con);
         return;
     }
 
+    // fetch number of fields
     int num_fields = mysql_num_fields(result);
     #ifdef DEBUG
         mexPrintf("cols: %d\n", num_fields);
     #endif
+
+    // fetch number of rows
     int num_rows = mysql_num_rows(result) + 1;
     #ifdef DEBUG
         mexPrintf("rows: %d\n", num_rows);
     #endif
+
+    // prepare cell array
     cell_array_ptr = mxCreateCellMatrix(num_rows, num_fields);
     MYSQL_ROW row;
     MYSQL_FIELD *field;
