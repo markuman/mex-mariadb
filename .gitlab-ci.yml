@@ -14,7 +14,7 @@ stages:
   - test
 
 before_script:
-  - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl && echo "done" || yum install -y epel-release && yum install -y curl mariadb-libs mariadb-devel make gcc octave-devel
+  - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl && echo "done" || yum install -y epel-release
   - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
-  - apk --update --no-cache add octave && echo "done" || echo "this was hopefully not an alpine linux. otherwise the error message is gone"
+  - apk --update --no-cache add octave && echo "done" || yum install -y curl mariadb-libs mariadb-devel make gcc octave-devel
   - curl http://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
