@@ -4,7 +4,8 @@
 
 
 * https://git.osuv.de/m/mex-mariadb
-* Mirror: https://gitlab.com/markuman/mex-mariadb
+* Pull Mirror: https://gitlab.com/markuman/mex-mariadb
+* Push Mirror: https://github.com/markuman/mex-mariadb
 
 * test compiling
   * MariaDB 5.5 @ Centos 7 
