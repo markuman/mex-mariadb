@@ -1,6 +1,6 @@
 include:
-  - '/gitlabci/build.yml'
-  - '/gitlabci/test.yml'
+  - "/gitlabci/build.yml"
+  - "/gitlabci/test.yml"
 
 image: alpine:edge
 
@@ -12,10 +12,3 @@ variables:
 stages:
   - build
   - test
-
-before_script:
-  - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl && echo "done" || yum install -y epel-release
-  - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories  && echo "done" || echo "it's not alpine"
-  - apk --update --no-cache add octave && echo "done" || yum install -y curl mariadb-libs mariadb-devel make gcc octave-devel
-  - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
-

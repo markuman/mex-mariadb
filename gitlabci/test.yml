@@ -1,4 +1,3 @@
-
 mariadb 10.2:
   stage: test
   tags:
@@ -8,8 +7,29 @@ mariadb 10.2:
     - name: mariadb:10.2.15
       alias: mariadb
   script:
+    - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl
+    - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+    - apk --update --no-cache add octave
     - apk --update --no-cache add mariadb-client mariadb-dev
     - make mysql
+    - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+mariadb 10.4:
+  stage: test
+  tags:
+    - docker
+    - shared
+  services:
+    - name: mariadb:10.4.4
+      alias: mariadb
+  script:
+    - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl
+    - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+    - apk --update --no-cache add octave
+    - apk --update --no-cache add mariadb-client mariadb-dev
+    - make mysql
+    - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
 mariadb 10.3:
@@ -18,11 +38,15 @@ mariadb 10.3:
     - docker
     - shared
   services:
-    - name: mariadb:10.3.10
+    - name: mariadb:10.3.14
       alias: mariadb
   script:
+    - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl
+    - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+    - apk --update --no-cache add octave
     - apk --update --no-cache add mariadb-client mariadb-dev
     - make mysql
+    - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
 mariadb 10.1:
@@ -34,8 +58,12 @@ mariadb 10.1:
     - name: mariadb:10.1.35
       alias: mariadb
   script:
+    - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl
+    - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+    - apk --update --no-cache add octave
     - apk --update --no-cache add mariadb-client mariadb-dev
     - make mysql
+    - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
 mariadb 10.0:
@@ -47,8 +75,12 @@ mariadb 10.0:
     - name: mariadb:10.0.36
       alias: mariadb
   script:
+    - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl
+    - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+    - apk --update --no-cache add octave
     - apk --update --no-cache add mariadb-client mariadb-dev
     - make mysql
+    - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
 mariadb 5.5:
@@ -60,8 +92,12 @@ mariadb 5.5:
     - name: mariadb:5.5.61
       alias: mariadb
   script:
+    - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl
+    - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+    - apk --update --no-cache add octave
     - apk --update --no-cache add mariadb-client mariadb-dev
     - make mysql
+    - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
 mysql 5.7:
@@ -73,7 +109,25 @@ mysql 5.7:
     - name: mysql:5.7.21
       alias: mariadb
   script:
+    - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl
+    - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+    - apk --update --no-cache add octave
     - apk --update --no-cache add mariadb-client mariadb-dev
     - make mysql
+    - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
+octave 6 mariadb 10.4:
+  image: mtmiller/octave:6.0.0
+  stage: test
+  services:
+    - name: mariadb:10.4.4
+      alias: mariadb
+  tags:
+    - docker
+    - shared
+  script:
+    - apt update && apt install libmysqlclient-dev libssl-dev -y
+    - make mysql
+    - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
