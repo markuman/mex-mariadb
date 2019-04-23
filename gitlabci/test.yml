@@ -117,8 +117,8 @@ mysql 5.7:
     - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
-octave 6 mariadb 10.4:
-  image: mtmiller/octave:6.0.0
+octave 5 mariadb 10.4:
+  image: mtmiller/octave:5.1.0
   stage: test
   services:
     - name: mariadb:10.4.4
