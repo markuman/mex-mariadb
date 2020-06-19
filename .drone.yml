@@ -1,5 +1,15 @@
-pipeline:
-  test:
+kind: pipeline
+type: docker
+name: default
+
+services:
+  - name: database
+    image: mariadb:10.4.12
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+
+steps:
+  - name: test
     image: alpine:edge
     environment:
       - MYSQL_HOST=database
@@ -14,9 +24,5 @@ pipeline:
       - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
       - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
-services:
-  database:
-    image: mariadb:10.4.12
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
+
 
