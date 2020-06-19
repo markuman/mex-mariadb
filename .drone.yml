@@ -10,6 +10,7 @@ pipeline:
       - apk --update --no-cache add octave
       - apk --update --no-cache add mariadb-client mariadb-dev
       - make mysql
+      - sleep 15
       - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
       - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
