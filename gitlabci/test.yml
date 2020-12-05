@@ -131,3 +131,18 @@ octave 5 mariadb 10.4:
     - make mysql
     - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
     - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
+
+ubuntu 20.04:
+  image: ubuntu:20.04
+  stage: test
+  services:
+    - name: mariadb:10.3
+      alias: mariadb
+  tags:
+    - docker
+    - shared
+  script:
+    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y libssl-dev build-essential liboctave-dev octave libmariadb-dev libmariadbclient-dev libmariadb3 build-essential curl
+    - make build
+    - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
+    - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
