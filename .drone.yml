@@ -4,23 +4,19 @@ name: default
 
 services:
   - name: database
-    image: mariadb:10.4.12
+    image: mariadb:10.3
     environment:
       MYSQL_ROOT_PASSWORD: password
 
 steps:
   - name: test
-    image: alpine:edge
+    image: ubuntu:20.04
     environment:
       MYSQL_HOST: database
       MYSQL_ROOT_PASSWORD: password
     commands:
-      - apk --update --no-cache add mariadb-client mariadb-dev alpine-sdk curl
-      - echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
-      - apk --update --no-cache add octave
-      - apk --update --no-cache add mariadb-client mariadb-dev
-      - make mysql
-      - sleep 15
+      - apt update && DEBIAN_FRONTEND=noninteractive apt install -y libssl-dev build-essential liboctave-dev octave libmariadb-dev libmariadbclient-dev libmariadb3 build-essential curl
+      - make build
       - curl https://git.osuv.de/m/mUnittest/raw/branch/master/mUnittest.m > mUnittest.m
       - octave-cli --eval 'quit(or(0, mUnittest("gitlabci")))'
 
