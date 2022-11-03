@@ -27,3 +27,12 @@ debug: ## debug
 	sleep 10
 	$(MAKE) mysql
 	octave-cli bug.m
+
+
+macos_mysql: ## build against -lmysqlclient
+		mkoctfile --mex  -DDEBUG -L/usr/lib -L/usr/local/lib -L/usr/local/Cellar/mysql/8.0.30_1/lib -lmysqlclient -I/usr/local/Cellar/mysql/8.0.30_1/include/mysql mariadb.c
+		mv mariadb.mex mariadb_.mex
+
+macos_mariadb: ## build against -lmariadbclient
+		mkoctfile --mex  -DDEBUG -L/usr/lib -L/usr/local/lib -L/usr/local/Cellar/mariadb/10.8.3_1/lib -lmariadb -I/usr/local/Cellar/mysql/8.0.30_1/include/mysql mariadb.c
+		mv mariadb.mex mariadb_.mex
