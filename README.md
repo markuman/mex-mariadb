@@ -9,7 +9,8 @@
 
 * test compiling
   * MariaDB 5.5 @ Centos 7 
-  * MariaDB 10.2 @ Alpine Linux 
+  * MariaDB 10.2 @ Alpine Linux
+  * MariaDB 10.3.29 @ macOS Big Sur 11.7.1  
 * run tests against
   * MariaDB 10.1
   * MariaDB 10.2
@@ -23,6 +24,8 @@
 $ make
 mkoctfile --mex  -L/usr/lib  -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto -I/usr/include/mysql mariadb.c
 ```
+
+On macOS use `make macos_mariadb` or `make macos_mysql` depending on which binaries are installed (MariaDB or MySQL). Use Homebrew to install the binary libraries with `brew install mariadb` or `brew install mysql`.
 
 
 # example
